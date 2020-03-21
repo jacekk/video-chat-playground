@@ -1,0 +1,27 @@
+.controls
+	display: flex
+	justify-content: center
+	flex-direction: column
+
+	&__buttons
+		display: flex
+		flex-direction: row
+		justify-content: space-around
+
+	button
+		background: lightgreen
+		border-radius: 6px
+		border: none
+		color: black
+		font-weight: bold
+		margin: 8px 4px
+		outline: none
+		padding: 8px 14px
+		transition: background .2s
+		&:hover
+			background: white
+		&:disabled
+			background: grey
+
+	pre
+		background: white

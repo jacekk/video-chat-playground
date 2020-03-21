@@ -17,7 +17,7 @@ const didMountAsync = async () => {
 		videoElem.srcObject = stream
 		videoElem.play()
 	} catch (err) {
-		alert(err)
+		console.error(err)
 	}
 }
 
