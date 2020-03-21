@@ -6,10 +6,10 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "rimraf ./dist && parcel build index.html",
+    "build": "rimraf ./dist && parcel build client/index.html",
     "clear": "rimraf ./dist ./.cache",
     "serve": "serve ./dist --single --listen 9000",
-    "start": "parcel index.html"
+    "start": "parcel client/index.html"
   },
   "browserslist": [
     "last 1 Chrome version"
