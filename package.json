@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "rimraf ./dist && parcel build client/index.html",
+    "build": "rimraf ./dist && parcel build client/index.html --no-source-maps",
     "clear": "rimraf ./dist ./.cache",
     "serve": "serve ./dist --single --listen 9000",
     "start": "parcel client/index.html"
