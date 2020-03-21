@@ -2,8 +2,9 @@ import { useWindowSize } from '@react-hook/window-size'
 import React from 'react'
 import useDimensions from 'react-use-dimensions'
 
+import { videoElementId, heigherVideoClassName } from '../constants'
+
 import './AppVideo.sass'
-import { videoElementId, heigherVideoClassName } from './constants'
 
 const getUserMedia = async () => window.navigator.mediaDevices.getUserMedia({ video: true, audio: false })
 
@@ -50,8 +51,8 @@ export const AppVideo = () => {
 	}, [...windowDims, videoDims.width, videoDims.height])
 
 	return (
-		<div className="app-video-wrapper">
-			<video ref={videoRef} id={videoElementId} autoPlay></video>
+		<div className="app-video">
+			<video ref={videoRef} id={videoElementId} className="app-video__element" autoPlay></video>
 		</div>
 	)
 }
