@@ -11,6 +11,9 @@
     "serve": "serve ./dist --single --listen 9000",
     "start": "parcel index.html"
   },
+  "browserslist": [
+    "last 1 Chrome version"
+  ],
   "dependencies": {
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.1",
