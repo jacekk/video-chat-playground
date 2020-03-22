@@ -1,5 +1,5 @@
 const http = require('http')
-const server = require('websocket').server
+const Server = require('websocket').server
 
 const { onRequest } = require('./request')
 
@@ -10,6 +10,6 @@ httpServer.listen(serverPort, () => {
 	console.log(`Server listening at port ${serverPort}`)
 })
 
-const wsServer = new server({ httpServer })
+const wsServer = new Server({ httpServer })
 
 wsServer.on('request', onRequest)

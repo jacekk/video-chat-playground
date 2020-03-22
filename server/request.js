@@ -3,7 +3,7 @@ const uuid = require('uuid')
 let clients = []
 
 module.exports.onRequest = (request) => {
-	const connection = request.accept()
+	const connection = request.accept() // NOT for production
 	const requestClientId = uuid.v4()
 
 	clients.forEach((client) => {
