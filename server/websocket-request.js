@@ -2,7 +2,7 @@ const uuid = require('uuid')
 
 let clients = []
 
-module.exports.onRequest = (request) => {
+module.exports.onWsRequest = (request) => {
 	const connection = request.accept() // NOT for production
 	const requestClientId = uuid.v4()
 

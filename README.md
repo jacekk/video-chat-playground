@@ -13,7 +13,7 @@ To run the server:
 1.  `./scripts/generate-ssl.sh`
 1.  `yarn install`
 1.  `yarn server:start`
-1.  open https://localhost:9876 and accept the SSL exception
+1.  open https://localhost:9876/start and accept the SSL exception
 
 To run the client:
 
