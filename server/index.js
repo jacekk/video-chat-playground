@@ -1,29 +1,24 @@
+const fs = require('fs')
 const http = require('https')
-const pem = require('pem')
+const path = require('path')
 const Server = require('websocket').server
 
 const { onRequest } = require('./request')
 
 const serverPort = 9876
+const sslDir = path.resolve(`${__dirname}/../ssl/`)
+
+const serverOpts = {
+	cert: fs.readFileSync(path.resolve(`${sslDir}/temp.cert`)),
+	key: fs.readFileSync(path.resolve(`${sslDir}/temp.key`)),
+}
 
 const onServerListem = () => {
 	console.log(`Server listening at port ${serverPort}`)
 }
 
-const onCreateCertificate = (err, pemResult) => {
-	if (err) {
-		throw err
-	}
+const httpServer = http.createServer(serverOpts, () => {})
+const wsServer = new Server({ httpServer })
 
-	const serverOpts = {
-		cert: pemResult.certificate,
-		key: pemResult.serviceKey,
-	}
-	const httpServer = http.createServer(serverOpts, () => {})
-	const wsServer = new Server({ httpServer })
-
-	httpServer.listen(serverPort, onServerListem)
-	wsServer.on('request', onRequest)
-}
-
-pem.createCertificate({ days: 1, selfSigned: true }, onCreateCertificate)
+httpServer.listen(serverPort, onServerListem)
+wsServer.on('request', onRequest)

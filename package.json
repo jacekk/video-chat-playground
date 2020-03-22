@@ -6,11 +6,11 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build:client": "rimraf ./dist && parcel build client/index.html --no-source-maps",
     "clear": "rimraf ./dist ./.cache",
-    "serve": "serve ./dist --single --listen 9000",
-    "start:client": "parcel client/index.html",
-    "start:server": "nodemon --watch ./server ./server/index.js localhost 9876"
+    "client:build": "rimraf ./dist && parcel build client/index.html --no-source-maps",
+    "client:serve": "serve ./dist --single --listen 9000 --ssl-cert ./ssl/temp.cert --ssl-key ./ssl/temp.key",
+    "client:start": "parcel --https --port 9000 client/index.html",
+    "server:start": "nodemon --watch ./server ./server/index.js videochat-playground.local 9876"
   },
   "browserslist": [
     "last 1 Chrome version"
@@ -21,7 +21,6 @@
     "@react-hook/window-size": "^1.0.13",
     "nodemon": "^2.0.2",
     "parcel-bundler": "^1.12.4",
-    "pem": "^1.14.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-use-dimensions": "^1.2.1",
