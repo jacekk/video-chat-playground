@@ -1,5 +1,6 @@
 .cache/
 dist/
 node_modules/
+ssl/
 
 *error.log
