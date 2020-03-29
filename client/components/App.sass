@@ -2,8 +2,6 @@ html, body
 	margin: 0
 	padding: 0
 
-$video-margin: 20px
-$video-size: 'calc(100% - #{$video-margin} * 2)'
 
 .app
 	align-items: center
@@ -12,16 +10,17 @@ $video-size: 'calc(100% - #{$video-margin} * 2)'
 	height: 100vh
 	justify-content: center
 
-	&__controls
-		bottom: auto
-		left: 0
-		position: absolute
-		right: 0
-		top: 0
-		z-index: 2
+	&__main
+		background: darkgreen
+		display: flex
+		flex-direction: column
+		flex-grow: 1
+		height: 100%
+		width: auto
 
-	&__video
-		height: #{$video-size}
-		overflow: hidden
-		width: #{$video-size}
-		z-index: 1
+	&__sidebar
+		background: darkblue
+		display: flex
+		flex-direction: column
+		height: 100%
+		width: 400px

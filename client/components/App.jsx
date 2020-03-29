@@ -8,12 +8,12 @@ import './App.sass'
 export const App = () => {
 	return (
 		<div className="app">
-			<div className="app__controls">
-				<Controls />
-			</div>
-			<div className="app__video">
+			<main className="app__main">
 				<AppVideo />
-			</div>
+			</main>
+			<aside className="app__sidebar">
+				<Controls />
+			</aside>
 		</div>
 	)
 }

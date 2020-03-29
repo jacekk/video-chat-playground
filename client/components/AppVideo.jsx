@@ -2,7 +2,7 @@ import { useWindowSize } from '@react-hook/window-size'
 import React from 'react'
 import useDimensions from 'react-use-dimensions'
 
-import { videoElementId, heigherVideoClassName } from '../constants'
+import { videoElementId, heigherVideoClassName, sidebarWidth } from '../constants'
 
 import './AppVideo.sass'
 
@@ -23,7 +23,7 @@ const didMountAsync = async () => {
 
 const adjustVideoElement = (windowDims, videoDims) => {
 	const [windowWidth, windowHeight] = windowDims
-	const windowRatio = windowWidth / windowHeight
+	const windowRatio = (windowWidth - sidebarWidth) / windowHeight
 	const videoRatio = videoDims.height / videoDims.width
 	const videoClasses = document.getElementById(videoElementId).classList
 
@@ -43,7 +43,8 @@ export const AppVideo = () => {
 	const [videoRef, videoDims] = useDimensions()
 
 	React.useEffect(() => {
-		didMountAsync(videoDims, windowDims)
+		adjustVideoElement(windowDims, videoDims)
+		didMountAsync()
 	}, [])
 
 	React.useEffect(() => {
@@ -52,7 +53,9 @@ export const AppVideo = () => {
 
 	return (
 		<div className="app-video">
-			<video ref={videoRef} id={videoElementId} className="app-video__element" autoPlay></video>
+			<div className="app-video__inner">
+				<video ref={videoRef} id={videoElementId} className="app-video__element" autoPlay></video>
+			</div>
 		</div>
 	)
 }
