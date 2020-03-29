@@ -7,11 +7,11 @@
   "private": false,
   "scripts": {
     "clear": "rimraf ./dist ./.cache",
-    "client:build": "rimraf ./dist && parcel build client/index.html --no-source-maps",
+    "client:build": "rimraf ./dist && parcel build ./src/client/index.html --no-source-maps",
     "client:serve": "serve ./dist --single --listen 9000 --ssl-cert ./ssl/temp.cert --ssl-key ./ssl/temp.key",
-    "client:start": "parcel --https --port 9000 client/index.html",
+    "client:start": "parcel --https --port 9000 ./src/client/index.html",
     "dev": "npm-run-all --parallel client:start server:start",
-    "server:start": "nodemon --watch ./server ./server/index.js videochat-playground.local 9876"
+    "server:start": "nodemon --watch ./src/server ./src/server/index.js videochat-playground.local 9876"
   },
   "browserslist": [
     "last 1 Chrome version"

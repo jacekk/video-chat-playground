@@ -7,7 +7,7 @@ const { onWsRequest } = require('./websocket-request')
 const { requestListener } = require('./server-request')
 
 const serverPort = 9876
-const sslDir = path.resolve(`${__dirname}/../ssl/`)
+const sslDir = path.resolve(`${__dirname}/../../ssl/`)
 const serverOpts = {
 	cert: fs.readFileSync(path.resolve(`${sslDir}/temp.cert`)),
 	key: fs.readFileSync(path.resolve(`${sslDir}/temp.key`)),
