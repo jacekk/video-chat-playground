@@ -11,12 +11,13 @@
     "client:serve": "serve ./dist --single --listen 9000 --ssl-cert ./ssl/temp.cert --ssl-key ./ssl/temp.key",
     "client:start": "parcel --https --port 9000 ./src/client/index.html",
     "dev": "npm-run-all --parallel client:start server:start",
-    "server:start": "nodemon --watch ./src/server ./src/server/index.js videochat-playground.local 9876"
+    "server:start": "nodemon --watch ./src/server --exec babel-node ./src/server/index.js videochat-playground.local 9876"
   },
   "browserslist": [
     "last 1 Chrome version"
   ],
   "dependencies": {
+    "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
     "@react-hook/window-size": "^1.0.13",

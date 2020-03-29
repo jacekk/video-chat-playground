@@ -1,6 +1,35 @@
-const uuid = require('uuid')
+import * as uuid from 'uuid'
+
+import * as ACTIONS from '../common/actionsTypes'
+
+const MESSAGES_LIMIT = 3
+
+// @todo dump messages into some storage every couple seconds
+// @todo read messages from storage on init
+let messages = []
 
 let clients = []
+
+const onMessageCreated = (requestClientId, payload) => {
+	messages.push({
+		clientId: requestClientId,
+		content: payload,
+		createdAt: Date.now(),
+		messageId: uuid.v4(),
+	})
+
+	if (messages.length > MESSAGES_LIMIT) {
+		messages.shift()
+	}
+
+	clients.forEach((client) => {
+		const msg = JSON.stringify({
+			payload: messages,
+			type: ACTIONS.ACTION_TYPE__MESSAGES_UPDATE,
+		})
+		client.connection.send(msg)
+	})
+}
 
 module.exports.onWsRequest = (request) => {
 	const connection = request.accept() // NOT for production
@@ -9,8 +38,11 @@ module.exports.onWsRequest = (request) => {
 	clients.forEach((client) => {
 		client.connection.send(
 			JSON.stringify({
-				client: requestClientId,
-				text: 'I am now connected',
+				type: ACTIONS.ACTION_TYPE__CLIENT_IN,
+				payload: {
+					clientId: requestClientId,
+					message: 'I am in :)',
+				},
 			})
 		)
 	})
@@ -18,29 +50,32 @@ module.exports.onWsRequest = (request) => {
 	clients.push({ connection, id: requestClientId })
 
 	connection.on('message', (message) => {
-		console.log('onMessage', requestClientId, '-->', message.utf8Data)
-		clients
-			.filter((client) => client.id !== requestClientId)
-			.forEach((client) =>
-				client.connection.send(
-					JSON.stringify({
-						client: requestClientId,
-						text: message.utf8Data,
-					})
-				)
-			)
+		const parsedAction = JSON.parse(message.utf8Data)
+
+		console.log('onMessage', requestClientId, '-->', parsedAction.type, '-->', parsedAction.payload)
+
+		switch (parsedAction.type) {
+			case ACTIONS.ACTION_TYPE__MESSAGE_CREATED:
+				onMessageCreated(requestClientId, parsedAction.payload)
+				break
+			default:
+				return
+		}
 	})
 
 	connection.on('close', () => {
 		clients = clients.filter((client) => client.id !== requestClientId)
 
-		clients.forEach((client) =>
+		clients.forEach((client) => {
 			client.connection.send(
 				JSON.stringify({
-					client: requestClientId,
-					text: 'I disconnected',
+					type: ACTIONS.ACTION_TYPE__CLIENT_OUT,
+					payload: {
+						clientId: requestClientId,
+						message: 'I am out :)',
+					},
 				})
 			)
-		)
+		})
 	})
 }

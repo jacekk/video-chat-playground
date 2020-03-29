@@ -2,6 +2,7 @@ import React from 'react'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 
 import { webSocketUrl } from '../constants'
+import * as ACTIONS from '../../common/actionsTypes'
 
 import './Controls.sass'
 
@@ -19,8 +20,13 @@ export const Controls = () => {
 
 	const onSayhelloClick = () => {
 		const randNumber = Math.ceil(Math.random() * 1e4)
-		const msg = `Hello times ${randNumber}!`
-		sendMessage(msg)
+		sendMessage(
+			JSON.stringify({
+				type: ACTIONS.ACTION_TYPE__MESSAGE_CREATED,
+				payload: `Hello times ${randNumber}!`,
+				// payload: `John says hello`, // @todo
+			})
+		)
 	}
 
 	React.useEffect(() => {

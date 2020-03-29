@@ -1,10 +1,10 @@
-const fs = require('fs')
-const http = require('https')
-const path = require('path')
-const Server = require('websocket').server
+import fs from 'fs'
+import http from 'https'
+import path from 'path'
+import { server } from 'websocket'
 
-const { onWsRequest } = require('./websocket-request')
-const { requestListener } = require('./server-request')
+import { onWsRequest } from './websocket-request'
+import { requestListener } from './server-request'
 
 const serverPort = 9876
 const sslDir = path.resolve(`${__dirname}/../../ssl/`)
@@ -16,7 +16,7 @@ const onServerListen = () => {
 	console.log(`Server listening at https://localhost:${serverPort}`)
 }
 const httpServer = http.createServer(serverOpts, requestListener)
-const wsServer = new Server({ httpServer })
+const wsServer = new server({ httpServer })
 
 httpServer.listen(serverPort, onServerListen)
 wsServer.on('request', onWsRequest)
