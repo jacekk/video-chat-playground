@@ -41,7 +41,7 @@ module.exports.onWsRequest = (request) => {
 				type: ACTIONS.ACTION_TYPE__CLIENT_IN,
 				payload: {
 					clientId: requestClientId,
-					message: 'I am in :)',
+					message: `${requestClientId} is in :)`,
 					numOfClients: clients.length + 1,
 				},
 			})
@@ -49,6 +49,17 @@ module.exports.onWsRequest = (request) => {
 	})
 
 	clients.push({ connection, id: requestClientId })
+
+	connection.send(
+		JSON.stringify({
+			type: ACTIONS.ACTION_TYPE__CLIENT_CONNECTED,
+			payload: {
+				clientId: requestClientId,
+				messages,
+				numOfClients: clients.length,
+			},
+		})
+	)
 
 	connection.on('message', (message) => {
 		const parsedAction = JSON.parse(message.utf8Data)
