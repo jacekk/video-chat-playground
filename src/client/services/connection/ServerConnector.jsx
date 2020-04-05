@@ -33,8 +33,7 @@ export const ServerConnector = (props) => {
 			return
 		}
 
-		console.log('ServerConnector | lastMessage', lastMessage.data)
-		// @todo dispatch action and listen on certain stores with some filtering
+		serverConnectionActions.onServerMessage(lastMessage.data)
 	}, [lastMessage])
 
 	return null

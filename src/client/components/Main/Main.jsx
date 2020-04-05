@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { AppVideo } from '../AppVideo'
+import { Video } from './Video/Video'
 
 export const Main = (props) => {
-	return <AppVideo />
+	return <Video />
 }

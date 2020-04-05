@@ -1,10 +1,6 @@
 import { action, computed } from 'easy-peasy'
 import { ReadyState } from 'react-use-websocket'
 
-const defaultSendMessage = () => {
-	throw new Error('ServerConnection has NOT been established.')
-}
-
 export const statusMapping = {
 	[ReadyState.CLOSED]: 'Closed',
 	[ReadyState.CLOSING]: 'Closing',
@@ -14,7 +10,7 @@ export const statusMapping = {
 
 export const serverConnection = {
 	status: ReadyState.CLOSED,
-	sendMessage: defaultSendMessage,
+	connectionSendMessage: null,
 	// computed
 	statusText: computed((state) => statusMapping[state.status]),
 	isEstablished: computed((state) => state.status === ReadyState.OPEN),
@@ -22,10 +18,23 @@ export const serverConnection = {
 	setStatus: action((state, readyState) => {
 		state.status = readyState
 	}),
-	disable: action((state) => {
-		state.sendMessage = defaultSendMessage
+	sendMessage: action((state, payload) => {
+		if (!state.isEstablished) {
+			throw new Error('ServerConnection has NOT been established.')
+		}
+		if (!state.connectionSendMessage) {
+			throw new Error('"serverConnection" store "connectionSendMessage" is not set.')
+		}
+
+		state.connectionSendMessage(payload)
 	}),
-	enable: action((state, sendMessage) => {
-		state.sendMessage = sendMessage
+	disable: action((state) => {
+		state.connectionSendMessage = null
+	}),
+	enable: action((state, connectionSendMessage) => {
+		state.connectionSendMessage = connectionSendMessage
+	}),
+	onServerMessage: action(() => {
+		// Do nothing. Works as a listener in other substores.
 	}),
 }

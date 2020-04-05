@@ -2,9 +2,9 @@ import { useWindowSize } from '@react-hook/window-size'
 import React from 'react'
 import useDimensions from 'react-use-dimensions'
 
-import { videoElementId, heigherVideoClassName, sidebarWidth } from '../constants'
+import { videoElementId, heigherVideoClassName, sidebarWidth } from '../../../constants'
 
-import './AppVideo.sass'
+import './Video.sass'
 
 const getUserMedia = async () => window.navigator.mediaDevices.getUserMedia({ video: true, audio: false })
 
@@ -38,7 +38,7 @@ const adjustVideoElement = (windowDims, videoDims) => {
 	}
 }
 
-export const AppVideo = () => {
+export const Video = () => {
 	const windowDims = useWindowSize()
 	const [videoRef, videoDims] = useDimensions()
 
@@ -54,8 +54,8 @@ export const AppVideo = () => {
 	}, [...windowDims, videoDims.width, videoDims.height])
 
 	return (
-		<div className="app-video">
-			<div className="app-video__inner">
+		<div className="video">
+			<div className="video__inner">
 				<video ref={videoRef} id={videoElementId} className="app-video__element" autoPlay></video>
 			</div>
 		</div>
