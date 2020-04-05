@@ -1,7 +1,8 @@
+import { server } from 'websocket'
+import chalk from 'chalk'
 import fs from 'fs'
 import http from 'https'
 import path from 'path'
-import { server } from 'websocket'
 
 import { onWsRequest } from './websocket-request'
 import { requestListener } from './server-request'
@@ -13,7 +14,10 @@ const serverOpts = {
 	key: fs.readFileSync(path.resolve(`${sslDir}/temp.key`)),
 }
 const onServerListen = () => {
-	console.log(`Server listening at https://localhost:${serverPort}`)
+	const startUrl = `https://localhost:${serverPort}/start`
+	const coloredUrl = chalk.greenBright.bgBlack.bold(` ${startUrl} `)
+
+	console.log(`Visit ${coloredUrl} to play with the server.`)
 }
 const httpServer = http.createServer(serverOpts, requestListener)
 const wsServer = new server({ httpServer })
