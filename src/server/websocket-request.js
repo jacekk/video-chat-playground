@@ -42,6 +42,7 @@ module.exports.onWsRequest = (request) => {
 				payload: {
 					clientId: requestClientId,
 					message: 'I am in :)',
+					numOfClients: clients.length + 1,
 				},
 			})
 		)
@@ -66,6 +67,8 @@ module.exports.onWsRequest = (request) => {
 	connection.on('close', () => {
 		clients = clients.filter((client) => client.id !== requestClientId)
 
+		const numOfClients = clients.length
+
 		clients.forEach((client) => {
 			client.connection.send(
 				JSON.stringify({
@@ -73,6 +76,7 @@ module.exports.onWsRequest = (request) => {
 					payload: {
 						clientId: requestClientId,
 						message: 'I am out :)',
+						numOfClients,
 					},
 				})
 			)
