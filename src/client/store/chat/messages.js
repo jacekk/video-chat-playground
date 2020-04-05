@@ -18,6 +18,13 @@ export const chatMessages = {
 			const serverAction = mapServerAction(target.payload)
 
 			switch (serverAction.type) {
+				case actionTypes.ACTION_TYPE__CLIENT_CONNECTED:
+					if (Array.isArray(serverAction.payload.messages)) {
+						state.items = serverAction.payload.messages
+					} else {
+						state.items = []
+					}
+					break
 				case actionTypes.ACTION_TYPE__MESSAGES_UPDATE:
 					state.items = serverAction.payload
 					break
