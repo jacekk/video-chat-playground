@@ -43,8 +43,10 @@ export const AppVideo = () => {
 	const [videoRef, videoDims] = useDimensions()
 
 	React.useEffect(() => {
-		adjustVideoElement(windowDims, videoDims)
 		didMountAsync()
+		setTimeout(() => {
+			adjustVideoElement(windowDims, videoDims)
+		}, 500)
 	}, [])
 
 	React.useEffect(() => {

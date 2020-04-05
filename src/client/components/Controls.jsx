@@ -1,50 +1,33 @@
+import { useStoreState } from 'easy-peasy'
 import React from 'react'
-import useWebSocket, { ReadyState } from 'react-use-websocket'
-
-import { webSocketUrl } from '../constants'
-import * as ACTIONS from '../../common/actionsTypes'
 
 import './Controls.sass'
 
 export const Controls = () => {
-	const [message, setMessage] = React.useState(null)
-	const [sendMessage, lastMessage, readyState] = useWebSocket(webSocketUrl)
-	const isConnectionOpen = ReadyState.OPEN === readyState
+	const statusText = useStoreState((s) => s.serverConnection.statusText)
+	const isConnectionOpen = useStoreState((s) => s.serverConnection.isEstablished)
 
-	const connectionStatus = {
-		[ReadyState.CONNECTING]: 'Connecting',
-		[ReadyState.OPEN]: 'Open',
-		[ReadyState.CLOSING]: 'Closing',
-		[ReadyState.CLOSED]: 'Closed',
-	}[readyState]
-
-	const onSayhelloClick = () => {
+	const onSayHelloClick = () => {
 		const randNumber = Math.ceil(Math.random() * 1e4)
-		sendMessage(
-			JSON.stringify({
-				type: ACTIONS.ACTION_TYPE__MESSAGE_CREATED,
-				payload: `Hello times ${randNumber}!`,
-				// payload: `John says hello`, // @todo
-			})
-		)
+
+		console.log('Controls | randNumber', randNumber)
+		// sendMessage(
+		// 	JSON.stringify({
+		// 		type: ACTIONS.ACTION_TYPE__MESSAGE_CREATED,
+		// 		payload: `Hello times ${randNumber}!`,
+		// 		// payload: `John says hello`, // @todo
+		// 	})
+		// )
 	}
-
-	React.useEffect(() => {
-		if (!lastMessage) {
-			return
-		}
-
-		setMessage(JSON.parse(lastMessage.data))
-	}, [lastMessage])
 
 	return (
 		<div className="controls">
 			<div className="controls__buttons">
-				<button type="button" disabled={!isConnectionOpen} onClick={onSayhelloClick}>
+				<button type="button" disabled={!isConnectionOpen} onClick={onSayHelloClick}>
 					Say hello
 				</button>
 			</div>
-			<pre>{JSON.stringify({ isConnectionOpen, readyState, connectionStatus, message }, null, 4)}</pre>
+			<pre>{JSON.stringify({ statusText, isConnectionOpen }, null, 4)}</pre>
 		</div>
 	)
 }
