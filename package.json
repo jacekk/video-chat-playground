@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "clear:native": "rm -rf ./dist ./.cache",
     "clear": "rimraf ./dist ./.cache",
     "client:build": "rimraf ./dist && parcel build ./src/client/index.html --no-source-maps",
     "client:serve": "serve ./dist --single --listen 9000 --ssl-cert ./ssl/temp.cert --ssl-key ./ssl/temp.key",
