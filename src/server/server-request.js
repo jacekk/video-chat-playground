@@ -1,4 +1,4 @@
-import * as uuid from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
 const isStartRoute = (req) => req.method.toLowerCase() === 'get' && req.url === '/start'
 
@@ -13,7 +13,7 @@ export const requestListener = (req, res) => {
 	}
 
 	res.writeHead(200, { 'Content-Type': 'text/html' })
-	res.write(`Request ID: ${uuid.v4()}`)
+	res.write(`Request ID: ${uuidv4()}`)
 	res.write('<br/><br/> d-_-b <br/><br/>')
 	res.write('<a href=":9000">open client app</a>')
 

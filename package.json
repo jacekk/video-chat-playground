@@ -34,7 +34,7 @@
     "rimraf": "^3.0.2",
     "sass": "^1.26.10",
     "serve": "^11.3.2",
-    "uuid": "^7.0.3",
+    "uuid": "^8.3.0",
     "websocket": "^1.0.31"
   },
   "devDependencies": {

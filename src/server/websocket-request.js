@@ -1,4 +1,4 @@
-import * as uuid from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
 import * as ACTIONS from '../common/actionsTypes'
 
@@ -15,7 +15,7 @@ const onMessageCreated = (requestClientId, payload) => {
 		clientId: requestClientId,
 		content: payload,
 		createdAt: Date.now(),
-		messageId: uuid.v4(),
+		messageId: uuidv4(),
 	})
 
 	if (messages.length > MESSAGES_LIMIT) {
@@ -33,7 +33,7 @@ const onMessageCreated = (requestClientId, payload) => {
 
 module.exports.onWsRequest = (request) => {
 	const connection = request.accept() // NOT for production
-	const requestClientId = uuid.v4()
+	const requestClientId = uuidv4()
 
 	clients.forEach((client) => {
 		client.connection.send(
