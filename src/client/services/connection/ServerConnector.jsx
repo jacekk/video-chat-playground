@@ -5,16 +5,13 @@ import useWebSocket from 'react-use-websocket'
 import { webSocketUrl } from '../../constants'
 
 export const ServerConnector = (props) => {
-	const webSockerOptions = React.useMemo(
-		() => ({
-			//Will attempt to reconnect on all close events, such as server shutting down.
-			shouldReconnect: () => true,
-		}),
-		[]
-	)
+	const webSockerOptions = {
+		//Will attempt to reconnect on all close events, such as server shutting down.
+		shouldReconnect: () => true,
+	}
 
 	const serverConnectionActions = useStoreActions((s) => s.serverConnection)
-	const [sendMessage, lastMessage, readyState] = useWebSocket(webSocketUrl, webSockerOptions)
+	const { sendMessage, lastMessage, readyState } = useWebSocket(webSocketUrl, webSockerOptions)
 
 	React.useEffect(() => {
 		serverConnectionActions.enable(sendMessage)
